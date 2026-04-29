@@ -361,4 +361,3 @@ class MedicalChatbot:
             )
 
         return self.predict_from_text(message)
-

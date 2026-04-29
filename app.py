@@ -59,7 +59,6 @@ def prediction_to_payload(prediction: PredictionResult) -> Dict[str, Any]:
     }
 
 
-
 @app.get("/")
 def index():
     return render_template("index.html")
@@ -75,9 +74,6 @@ def health() -> Any:
             "dataset_loaded": chatbot.has_data,
             "disease_count": chatbot.disease_count,
             "model_ready": chatbot.model_ready,
-            "base_dir": str(BASE_DIR),
-            "template_folder": app.template_folder,
-            "static_folder": app.static_folder,
             "predict_api_url": "http://127.0.0.1:5001/api/metamaid-symptom-checker",
         }
     )
