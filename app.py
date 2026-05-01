@@ -8,6 +8,7 @@ from flask import Flask, jsonify, render_template, request
 from model import MedicalChatbot, PredictionResult
 
 
+
 class Message(TypedDict):
     role: str
     text: str
@@ -20,6 +21,8 @@ app = Flask(
     template_folder=str(BASE_DIR / "templates"),
     static_folder=str(BASE_DIR / "static"),
 )
+
+
 
 chatbot = MedicalChatbot(dataset_path=str(BASE_DIR / "symptoms_data.csv"))
 
@@ -74,7 +77,7 @@ def health() -> Any:
             "dataset_loaded": chatbot.has_data,
             "disease_count": chatbot.disease_count,
             "model_ready": chatbot.model_ready,
-            "predict_api_url": "http://127.0.0.1:5001/api/metamaid-symptom-checker",
+            "predict_api_url": "http://127.0.0.1:5005/api/metamaid-symptom-checker",
         }
     )
 
@@ -113,5 +116,8 @@ def predict() -> Any:
     return jsonify(prediction_to_payload(prediction))
 
 
+import os
+
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    port = int(os.environ.get("PORT", 5005))
+    app.run(host="127.0.0.1", port=port, debug=False)
